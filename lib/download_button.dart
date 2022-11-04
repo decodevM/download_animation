@@ -14,7 +14,6 @@ class _DownloadButtonState extends State<DownloadButton>
   final double buttonHeight = 50;
   final double buttonWidth = 300;
 
-  bool _fadeAnimationCompleted = false;
   bool _animationCompleted = false;
 
   late AnimationController _scaleAnimationController;
@@ -29,7 +28,7 @@ class _DownloadButtonState extends State<DownloadButton>
   void initState() {
     _scaleAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 150),
     );
     _scaleAnimation =
         Tween<double>(begin: 1, end: 1.05).animate(_scaleAnimationController)
@@ -37,6 +36,8 @@ class _DownloadButtonState extends State<DownloadButton>
             if (status == AnimationStatus.completed) {
               // Scale animation is completed now
               _scaleAnimationController.reverse();
+            }
+            if (status == AnimationStatus.dismissed) {
               _fadeAnimationController.forward();
               _opacityAnimationController.forward();
             }
@@ -44,21 +45,17 @@ class _DownloadButtonState extends State<DownloadButton>
 
     _fadeAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 300),
     );
     _fadeAnimation =
         Tween<double>(begin: 50, end: 0).animate(_fadeAnimationController)
           ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              _fadeAnimationCompleted = true;
-              print(_fadeAnimation.value);
-              setState(() {});
-            }
+            if (status == AnimationStatus.completed) {}
           });
 
     _opacityAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 1300),
     );
     _opacityAnimation = Tween<double>(begin: 0, end: buttonWidth)
         .animate(_opacityAnimationController)
@@ -128,10 +125,9 @@ class _DownloadButtonState extends State<DownloadButton>
                                 topRight: Radius.circular(5),
                                 bottomRight: Radius.circular(5),
                               )),
-                          child: FittedBox(
+                          child: const FittedBox(
                             fit: BoxFit.scaleDown,
-                            child: const Icon(
-                                CupertinoIcons.arrow_down_to_line_alt,
+                            child: Icon(CupertinoIcons.arrow_down_to_line_alt,
                                 color: CupertinoColors.white),
                           ),
                         ),

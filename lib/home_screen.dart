@@ -1,6 +1,5 @@
 import 'package:download_animation/download_button.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,7 +11,7 @@ class HomeScreen extends StatelessWidget {
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: const [
             DownloadButton(buttonColor: CupertinoColors.systemPink),
             SizedBox(
               height: 20,
